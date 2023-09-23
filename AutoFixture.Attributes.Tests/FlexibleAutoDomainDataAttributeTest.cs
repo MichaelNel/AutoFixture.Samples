@@ -1,11 +1,8 @@
-using System.Diagnostics.CodeAnalysis;
-
 namespace AutoFixture.Attributes.Tests;
 
 public class FlexibleAutoDomainDataAttributeTest
 {
     [SetupFixture]
-    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public static IFixture SetupFixture(IFixture fixture)
     {
         fixture.Customize<int>(c => c.FromFactory(() => 5));
