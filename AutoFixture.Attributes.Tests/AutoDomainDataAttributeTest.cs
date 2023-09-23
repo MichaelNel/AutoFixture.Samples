@@ -1,3 +1,5 @@
+using AutoFixture.Attributes.Tests.Attributes;
+
 namespace AutoFixture.Attributes.Tests;
 
 public class AutoDomainDataAttributeTest

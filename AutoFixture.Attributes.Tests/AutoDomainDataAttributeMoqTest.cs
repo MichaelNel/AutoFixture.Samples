@@ -1,3 +1,4 @@
+using AutoFixture.Attributes.Tests.Attributes;
 using Moq;
 
 namespace AutoFixture.Attributes.Tests;

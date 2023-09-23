@@ -3,7 +3,7 @@ using AutoFixture.Kernel;
 using AutoFixture.Xunit2;
 using Xunit.Sdk;
 
-namespace AutoFixture.Attributes;
+namespace AutoFixture.Attributes.Tests.Attributes;
 
 public class SetupAutoDataAttribute : DataAttribute
 {

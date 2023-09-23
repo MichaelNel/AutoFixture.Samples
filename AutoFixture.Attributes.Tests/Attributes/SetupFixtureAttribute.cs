@@ -1,6 +1,6 @@
 using JetBrains.Annotations;
 
-namespace AutoFixture.Attributes;
+namespace AutoFixture.Attributes.Tests.Attributes;
 
 [MeansImplicitUse]
 [AttributeUsage(AttributeTargets.Method)]

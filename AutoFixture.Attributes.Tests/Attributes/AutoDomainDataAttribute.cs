@@ -1,4 +1,4 @@
-namespace AutoFixture.Attributes.Tests;
+namespace AutoFixture.Attributes.Tests.Attributes;
 
 public class AutoDomainDataAttribute : SetupAutoDataAttribute
 {
