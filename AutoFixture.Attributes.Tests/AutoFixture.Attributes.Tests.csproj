@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AutoFixture"/>
+        <PackageReference Include="AutoFixture.AutoMoq"/>
+        <PackageReference Include="AutoFixture.Xunit2"/>
+        <PackageReference Include="Castle.Core" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk"/>
+        <PackageReference Include="Shouldly"/>
+        <PackageReference Include="xunit"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\AutoFixture.Attributes\AutoFixture.Attributes.csproj"/>
+    </ItemGroup>
+
+</Project>
