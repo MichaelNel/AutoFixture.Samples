@@ -5,7 +5,7 @@ public class AutoDomainDataAttributeTest
     [SetupFixture]
     public static IFixture SetupFixture(IFixture fixture)
     {
-        fixture.Freeze<int>(c => c.FromFactory(() => 2));
+        fixture.Customize<int>(c => c.FromFactory(() => 2));
         return fixture;
     }
 

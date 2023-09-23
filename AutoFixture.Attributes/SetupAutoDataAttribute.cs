@@ -5,9 +5,20 @@ using Xunit.Sdk;
 
 namespace AutoFixture.Attributes;
 
-public class AutoDomainDataAttribute : DataAttribute
+public class SetupAutoDataAttribute : DataAttribute
 {
-    private Lazy<IFixture> _fixture = new(FixtureFactory.Create);
+    private Lazy<IFixture> _fixture;
+
+    public SetupAutoDataAttribute() : this(() => new Fixture())
+    {
+    }
+
+    protected SetupAutoDataAttribute(Func<IFixture> fixtureFactory)
+    {
+        _fixture = fixtureFactory != null
+            ? new Lazy<IFixture>(fixtureFactory, LazyThreadSafetyMode.PublicationOnly)
+            : throw new ArgumentNullException(nameof(fixtureFactory));
+    }
 
     public override IEnumerable<object[]> GetData(MethodInfo testMethod)
     {
