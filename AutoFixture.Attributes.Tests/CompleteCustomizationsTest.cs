@@ -6,9 +6,9 @@ namespace AutoFixture.Attributes.Tests;
 public class CompleteCustomizationsTest
 {
     [SetupFixture]
-    public static IFixture SetupFixture(IFixture fixture)
+    public static void SetupFixture(IFixture fixture)
     {
-        return fixture.Customize(new MyLongCustomization());
+        fixture.Customize(new MyLongCustomization());
     }
 
     /// <summary>

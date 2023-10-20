@@ -7,7 +7,7 @@ namespace AutoFixture.Attributes.Tests.Attributes;
 
 public class SetupAutoDataAttribute : DataAttribute
 {
-    private Lazy<IFixture> _fixture;
+    private readonly Lazy<IFixture> _fixture;
 
     public SetupAutoDataAttribute() : this(() => new Fixture())
     {
@@ -56,10 +56,10 @@ public class SetupAutoDataAttribute : DataAttribute
             throw new ArgumentException($"{nameof(SetupFixtureAttribute)} must be used on a static method");
         }
 
-        if (setupMethod is not null && setupMethod.ReturnType != typeof(IFixture))
+        if (setupMethod is not null && setupMethod.ReturnType != typeof(void))
         {
             throw new ArgumentException(
-                $"{nameof(SetupFixtureAttribute)} must be used on a method which returns {nameof(IFixture)}");
+                $"{nameof(SetupFixtureAttribute)} must be used on a method which returns void");
         }
 
         return setupMethod is not null;
@@ -69,7 +69,7 @@ public class SetupAutoDataAttribute : DataAttribute
     {
         if (setupMethod is not null)
         {
-            _fixture = new Lazy<IFixture>((IFixture)setupMethod.Invoke(null, new object?[] { _fixture.Value })!);
+            _fixture.Value.Customize(new SetupFixtureCustomizationWrapper(setupMethod));
         }
     }
 
@@ -99,6 +99,21 @@ public class SetupAutoDataAttribute : DataAttribute
             }
 
             return rightFrozen && !leftFrozen ? -1 : 0;
+        }
+    }
+
+    private class SetupFixtureCustomizationWrapper : ICustomization
+    {
+        private readonly MethodInfo _methodInfo;
+
+        public SetupFixtureCustomizationWrapper(MethodInfo setupMethod)
+        {
+            _methodInfo = setupMethod;
+        }
+
+        public void Customize(IFixture fixture)
+        {
+            _methodInfo.Invoke(null, new object?[] { fixture });
         }
     }
 }

@@ -5,10 +5,9 @@ namespace AutoFixture.Attributes.Tests;
 public class AutoDomainDataAttributeTest
 {
     [SetupFixture]
-    public static IFixture SetupFixture(IFixture fixture)
+    public static void SetupFixture(IFixture fixture)
     {
         fixture.Customize<int>(c => c.FromFactory(() => 2));
-        return fixture;
     }
 
     [Theory]

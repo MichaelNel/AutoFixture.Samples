@@ -6,11 +6,10 @@ namespace AutoFixture.Attributes.Tests;
 public class AutoDomainDataAttributeMoqTest
 {
     [SetupFixture]
-    public static IFixture Setup(IFixture fixture)
+    public static void Setup(IFixture fixture)
     {
         var mock = fixture.Freeze<Mock<IMyInterface>>();
         mock.Setup(m => m.GetInt()).Returns(4);
-        return fixture;
     }
 
     [Theory]
