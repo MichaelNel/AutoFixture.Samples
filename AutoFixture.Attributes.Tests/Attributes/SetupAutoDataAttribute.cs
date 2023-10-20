@@ -24,10 +24,10 @@ public class SetupAutoDataAttribute : DataAttribute
     {
         ArgumentNullException.ThrowIfNull(testMethod);
 
-        var setupMethodFound = TryFindAndValidateSetupMethod(testMethod, out var setupMethod);
-        if (setupMethodFound)
+        var setupMethod = FindAndValidateSetupMethod(testMethod);
+        if (setupMethod is not null)
         {
-            ApplySetupFixtureCustomizations(setupMethod);
+            _fixture.Value.Customize(new SetupFixtureCustomizationWrapper(setupMethod));
         }
 
         var objectList = new List<object>();
@@ -44,11 +44,11 @@ public class SetupAutoDataAttribute : DataAttribute
         };
     }
 
-    private static bool TryFindAndValidateSetupMethod(MemberInfo testMethod, out MethodInfo? setupMethod)
+    private static MethodInfo? FindAndValidateSetupMethod(MemberInfo testMethod)
     {
         ArgumentNullException.ThrowIfNull(testMethod.DeclaringType);
 
-        setupMethod = testMethod.DeclaringType
+        var setupMethod = testMethod.DeclaringType
             .GetMethods()
             .SingleOrDefault(m => m.GetCustomAttributes<SetupFixtureAttribute>().Any());
         if (setupMethod is not null && !setupMethod.IsStatic)
@@ -62,15 +62,7 @@ public class SetupAutoDataAttribute : DataAttribute
                 $"{nameof(SetupFixtureAttribute)} must be used on a method which returns void");
         }
 
-        return setupMethod is not null;
-    }
-
-    private void ApplySetupFixtureCustomizations(MethodInfo? setupMethod)
-    {
-        if (setupMethod is not null)
-        {
-            _fixture.Value.Customize(new SetupFixtureCustomizationWrapper(setupMethod));
-        }
+        return setupMethod;
     }
 
     private void CustomizeFixture(ParameterInfo p)
