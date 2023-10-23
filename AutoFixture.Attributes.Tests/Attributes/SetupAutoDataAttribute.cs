@@ -53,12 +53,12 @@ public class SetupAutoDataAttribute : DataAttribute
             .SingleOrDefault(m => m.GetCustomAttributes<SetupFixtureAttribute>().Any());
         if (setupMethod is not null && !setupMethod.IsStatic)
         {
-            throw new ArgumentException($"{nameof(SetupFixtureAttribute)} must be used on a static method");
+            throw new SetupFixtureException($"{nameof(SetupFixtureAttribute)} must be used on a static method");
         }
 
         if (setupMethod is not null && setupMethod.ReturnType != typeof(void))
         {
-            throw new ArgumentException(
+            throw new SetupFixtureException(
                 $"{nameof(SetupFixtureAttribute)} must be used on a method which returns void");
         }
 
